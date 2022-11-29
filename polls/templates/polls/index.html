@@ -1,4 +1,11 @@
-<a href="{% url 'profile' %}">Ваш профиль</a>
+{% load static %}
+{% load bootstrap4 %}
+
+{% if request.user.is_authenticated %}
+<nav>
+    <a href="{% url 'polls:profile' %}">Профиль</a>
+</nav>
+{% endif %}
 {% if latest_question_list %}
 <ul>
     {% for question in latest_question_list %}

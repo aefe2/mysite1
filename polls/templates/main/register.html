@@ -1,0 +1,12 @@
+
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+   <h4 class="p-3 mb-3 bg-light text-secondary border" style="margin-top: -30px;">Регистрация</h4>
+   <form method="post">
+       {% csrf_token %}
+       {% bootstrap_form form layout='horizontal' %}
+       {% buttons submit='Зарегистрироваться' %} {% endbuttons %}
+   </form>
+{% endblock %}

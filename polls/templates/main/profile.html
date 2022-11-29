@@ -1,1 +1,20 @@
-{{ user.username }}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<div class="header-bar">
+    <h1>Профиль</h1>
+</div>
+
+<div class="card-body">
+    {% if user.profile.profile_pic %}
+    <img src="{{ profile.profile_pic.url }}" height=100 width=100><br><br>
+    {% else %}
+    <img src="{% static 'static/main/img/default_avatar.png' %}" height=100 width=100><br><br>
+    {% endif %}
+    <p><strong>Пользователь:</strong> {{ user.username }}</p><br><br>
+</div>
+
+{% endblock content %}
+<!--https://habr.com/ru/sandbox/164517/-->
