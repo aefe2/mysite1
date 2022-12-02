@@ -1,6 +1,10 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import CreateView
+
+from .forms import RegisterUserForm
 from .models import Question, Choice, User
 from django.template import loader
 from django.urls import reverse, reverse_lazy
@@ -43,3 +47,15 @@ def vote(request, question_id):
 @login_required
 def profile(request):
     return render(request, 'main/profile.html')
+
+
+class RegisterView(CreateView):
+    template_name = 'main/register.html'
+    form_class = RegisterUserForm
+
+    def get_success_url(self):
+        return reverse('polls:login')
+
+
+class LoginView(LoginView):
+    template_name = 'main/login.html'

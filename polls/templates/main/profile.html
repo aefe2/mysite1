@@ -1,19 +1,15 @@
 {% load static %}
 {% load bootstrap4 %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}">
 {% block content %}
 
 <div class="header-bar">
-    <h1>Профиль</h1>
+    <p><strong>Профиль пользователя:</strong> {{ user.username }}<p>
+    <a href="{% url 'polls:index' %}">На главную</a>
 </div>
 
 <div class="card-body">
-    {% if user.profile.profile_pic %}
-    <img src="{{ profile.profile_pic.url }}" height=100 width=100><br><br>
-    {% else %}
-    <img src="{% static 'static/main/img/default_avatar.png' %}" height=100 width=100><br><br>
-    {% endif %}
-    <p><strong>Пользователь:</strong> {{ user.username }}</p><br><br>
+    <img src="{{ user.avatar.url }}" height=150 width=150 alt="Аватар">
 </div>
 
 {% endblock content %}
