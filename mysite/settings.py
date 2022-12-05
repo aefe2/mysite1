@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,4 @@ AUTH_USER_MODEL = 'polls.User'
 
 LOGIN_REDIRECT_URL = '/profile'
 LOGOUT_REDIRECT_URL = '/login'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

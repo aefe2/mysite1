@@ -2,12 +2,12 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <h4>Авторизация</h4>
+    <h2 class="">Авторизация</h2>
     <a href="{% url 'polls:index' %}">На главную</a>
     {% if request.user.is_authenticated %}
         <p>Вы уже выполнили вход. <a href="{% url 'logout' %}">Выйти.</a></p>
     {% else %}
-        <form method="post" style="margin-top: 10px;">
+        <form method="post">
             {% csrf_token %}
             {% bootstrap_form form layout='horizontal' %}
             <input type="hidden" name="next" value="{{ next }}">
