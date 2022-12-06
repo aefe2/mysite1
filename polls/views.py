@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import CreateView
 
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, EditProfile
 from .models import Question, Choice, User
 from django.template import loader
 from django.urls import reverse, reverse_lazy
@@ -47,6 +47,14 @@ def vote(request, question_id):
 @login_required
 def profile(request):
     return render(request, 'main/profile.html')
+
+
+# class EditP(request):
+#     template_name = 'main/profile_edit.html'
+#     form_class = EditProfile
+#
+#     def get_success_url(self):
+#         return reverse('polls:login')
 
 
 class RegisterView(CreateView):

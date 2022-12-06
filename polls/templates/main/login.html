@@ -1,18 +1,24 @@
 {% load static %}
 {% load bootstrap4 %}
-
+{% bootstrap_css %}
 {% block content %}
-    <h2 class="">Авторизация</h2>
-    <a href="{% url 'polls:index' %}">На главную</a>
-    {% if request.user.is_authenticated %}
-        <p>Вы уже выполнили вход. <a href="{% url 'logout' %}">Выйти.</a></p>
-    {% else %}
-        <form method="post">
-            {% csrf_token %}
-            {% bootstrap_form form layout='horizontal' %}
-            <input type="hidden" name="next" value="{{ next }}">
-            <br>
-            {% buttons submit='Войти' %} {% endbuttons %}
-        </form>
-    {% endif %}
+    <div class="container">
+        <div class="main-body">
+            <h2 class="title">Авторизация</h2>
+            <a href="{% url 'polls:index' %}">На главную</a>
+            {% if request.user.is_authenticated %}
+                <p>Вы уже выполнили вход. <a href="{% url 'logout' %}">Выйти.</a></p>
+            {% else %}
+                <form method="post" class="form">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% buttons %}
+                        <button type="submit" class="btn btn-primary">
+                            Войти
+                        </button>
+                    {% endbuttons %}
+                </form>
+        </div>
+    </div>
+            {% endif %}
 {% endblock %}

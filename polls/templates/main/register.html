@@ -1,12 +1,16 @@
 {% load static %}
 {% load bootstrap4 %}
-<link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}">
+{% bootstrap_css %}
 {% block content %}
-   <h1>Регистрация</h1>
-    <a href="{% url 'polls:index' %}">На главную</a>
-   <form class="form" enctype="multipart/form-data" method="post" novalidate="novalidate">
-       {% csrf_token %}
-       {% bootstrap_form form layout='horizontal' %}
-       {% buttons submit='Зарегистрироваться' %} {% endbuttons %}
-   </form>
+    <div class="container">
+        <div class="main-body">
+            <h1>Регистрация</h1>
+            <a href="{% url 'polls:index' %}">На главную</a>
+            <form class="form" enctype="multipart/form-data" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                {% bootstrap_form form layout='horizontal' %}
+                {% buttons submit='Зарегистрироваться' %} {% endbuttons %}
+            </form>
+        </div>
+    </div>
 {% endblock %}

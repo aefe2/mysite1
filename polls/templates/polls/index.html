@@ -1,26 +1,26 @@
 {% load static %}
 {% load bootstrap4 %}
-
-{% if request.user.is_authenticated %}
-<nav>
-    <p><strong>Пользователь:</strong> {{ user.username }}</p>
-    <a href="{% url 'polls:profile' %}">Профиль</a>
-    <a href="{% url 'polls:logout' %}">Выйти</a>
-</nav>
-{% else %}
-    <a href="{% url 'polls:login' %}">Войти</a>
-    <p>Или</p>
-    <a href="{% url 'polls:register' %}">Зарегистрироваться</a>
-{% endif %}
-{% if latest_question_list %}
-<ul>
-    {% for question in latest_question_list %}
-    <li><a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>
-    Нет вопросов!
-</p>
-
+{% bootstrap_css %}
+<div class="container">
+    {% if request.user.is_authenticated %}
+        <nav>
+            <p><strong>Пользователь:</strong> {{ user.username }}</p>
+            <a href="{% url 'polls:profile' %}">Профиль</a>
+            <a href="{% url 'polls:logout' %}">Выйти</a>
+        </nav>
+    {% else %}
+        <a href="{% url 'polls:login' %}">Войти</a>
+        <a href="{% url 'polls:register' %}">Зарегистрироваться</a>
+    {% endif %}
+    {% if latest_question_list %}
+        <ul>
+            {% for question in latest_question_list %}
+                <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>
+            Нет вопросов!
+        </p>
+</div>
 {% endif %}

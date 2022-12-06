@@ -1,0 +1,7 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+<form class="form" enctype="multipart/form-data" method="post" novalidate="novalidate">
+    {% csrf_token %}
+    {% bootstrap_form form layout='horizontal' %}
+    {% buttons submit='Зарегистрироваться' %} {% endbuttons %}
+</form>
