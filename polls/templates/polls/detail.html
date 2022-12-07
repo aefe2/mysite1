@@ -5,12 +5,14 @@
     <form action="{% url 'polls:vote' question.id %}" method="post">
         {% csrf_token %}
         <fieldset>
-            <legend>
-                <h1>{{question.question_text}}</h1>
-                <p>{{ question.full_description }}</p>
-                <img src="{{ question.question_image.url }}" height=150 width=150 alt="Изображение вопроса"
-                     class="rounded-circle">
-            </legend>
+            <h1>{{question.question_text}}</h1>
+            <p>{{ question.full_description }}</p>
+            {% if question.question_image %}
+            <img src="{{ question.question_image.url }}" height=150 width=150 alt="Изображение вопроса"
+                 class="rounded-circle"><br>
+            {% else %}
+            <p>Нет изображения</p>
+            {% endif %}
             {% if error_message %}<p><strong> {{error_message}}</strong></p>{% endif %}
             {% for choice in question.choice_set.all %}
             <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
