@@ -26,16 +26,15 @@ class RegisterUserForm(forms.ModelForm):
         enctype = "multipart/form-data"
 
 
-class EditProfile(forms.ModelForm):
+class EditProfileForm(forms.ModelForm):
     username = forms.CharField(label='Логин', error_messages={
         'unique': 'Данный логин занят'
     })
-    first_name = forms.CharField(label='Имя')
-    last_name = forms.CharField(label='Фамилия')
-    avatar = forms.ImageField(label='Аватар')
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+    first_name = forms.CharField(label='Имя', required=False)
+    last_name = forms.CharField(label='Фамилия', required=False)
+    avatar = forms.ImageField(label='Аватар', required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'avatar', 'password')
+        fields = ('username', 'first_name', 'last_name', 'avatar')
         enctype = "multipart/form-data"
