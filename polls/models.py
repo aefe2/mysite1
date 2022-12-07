@@ -33,8 +33,13 @@ class User(AbstractUser):
 
 
 class Question(models.Model):
-    question_text = models.CharField(max_length=200)
+    question_text = models.CharField(max_length=200, verbose_name='Текст вопроса')
+    short_description = models.CharField(max_length=100, blank=True, verbose_name='Краткое описание')
+    full_description = models.CharField(max_length=250, blank=True, verbose_name='Полное описание')
     pub_date = models.DateTimeField('date published')
+    question_image = models.ImageField(upload_to=get_name_file, blank=True, validators=[
+        FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp']),
+        validate_image_size], verbose_name='Изображение')
 
     def was_published_recently(self):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)

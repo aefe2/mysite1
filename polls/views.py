@@ -4,7 +4,6 @@ from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import CreateView, UpdateView
-
 from .forms import RegisterUserForm, EditProfileForm
 from .models import Question, Choice, User
 from django.template import loader
@@ -57,13 +56,6 @@ def profile(request):
     return render(request, 'main/profile.html')
 
 
-# class EditProfile(UpdateView):
-#     template_name = 'main/profile_edit.html'
-#     form_class = EditProfile
-#     success_url = reverse_lazy('polls:profile')
-#
-#     def get_object(self):
-#         return self.request.user
 class EditProfileView(SuccessMessageMixin, LoginRequiredMixin,
                       UpdateView):
     model = User
