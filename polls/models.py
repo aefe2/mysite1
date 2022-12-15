@@ -1,7 +1,7 @@
 import datetime
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
-from django.core.validators import FileExtensionValidator
+from django.core.validators import FileExtensionValidator, RegexValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.crypto import get_random_string
@@ -20,16 +20,39 @@ def validate_image_size(img):
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=150, verbose_name='Логин', null=False, unique=True, blank=False)
-    first_name = models.CharField(max_length=150, verbose_name='Имя', blank=False)
-    last_name = models.CharField(max_length=150, verbose_name='Фамилия', blank=False)
+    username = models.CharField(max_length=200, verbose_name='Логин', unique=True, blank=False, validators=[
+        RegexValidator(
+            regex='^[a-zA-Z0-9]+$',
+            message='Только латиница и цифры',
+            code='invalid_username'
+        ),
+    ])
+    first_name = models.CharField(max_length=200, verbose_name='Имя', blank=False, validators=[
+        RegexValidator(
+            regex='^[А-Яа-я -]*$',
+            message='Только кириллица',
+            code='invalid_username'
+        ),
+    ])
+    last_name = models.CharField(max_length=200, verbose_name='Имя', blank=False, validators=[
+        RegexValidator(
+            regex='^[А-Яа-я -]*$',
+            message='Только кириллица',
+            code='invalid_username'
+        ),
+    ])
     avatar = models.ImageField(upload_to=get_name_file, blank=False,
                                validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp']),
                                            validate_image_size])
     password = models.CharField(max_length=200, verbose_name='Пароль', null=False, blank=False)
 
+    class Meta:
+        verbose_name = 'Пользователи'
+        verbose_name_plural = 'Пользователи'
+        ordering = ['first_name']
+
     def __str__(self):
-        return str(self.username)
+        return str(self.first_name) + ' ' + str(self.last_name) + ' | ' + str(self.username)
 
 
 class Question(models.Model):
@@ -47,11 +70,22 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
+    class Meta:
+        verbose_name = 'Опросы'
+        verbose_name_plural = 'Опросы'
+        ordering = ['pub_date']
+
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
+    choice_text = models.CharField(max_length=200, validators=[
+        RegexValidator(), ])
     votes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.choice_text
+
+
+class Vote(models.Model):
+    voter = models.ForeignKey('User', verbose_name='Пользователь', related_name='+', on_delete=models.CASCADE)
+    question_vote = models.ForeignKey(Question, verbose_name='Опрос', on_delete=models.CASCADE)
