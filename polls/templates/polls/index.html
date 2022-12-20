@@ -12,18 +12,20 @@
     <a href="{% url 'polls:login' %}">Войти</a>
     <a href="{% url 'polls:register' %}">Зарегистрироваться</a>
     {% endif %}
-    {% if latest_question_list %}
-    <ul>
-        {% for question in latest_question_list %}
-        <li>
-            <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
-            <p>{{ question.short_description }}</p>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>
-        Нет вопросов!
-    </p>
+    {% if request.user.is_authenticated %}
+        {% if latest_question_list %}
+        <ul>
+            {% for question in latest_question_list %}
+            <li>
+                <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                <p>{{ question.short_description }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>
+            Нет вопросов!
+        </p>
+    {% endif %}
 </div>
 {% endif %}

@@ -1,15 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, PasswordChangeView
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import CreateView, UpdateView
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from .forms import RegisterUserForm, EditProfileForm
 from .models import Question, Choice, User, Vote
-from django.template import loader
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.views import generic
-from django.views.generic import UpdateView, CreateView, DeleteView
+from django.views.generic import CreateView, DeleteView
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
