@@ -16,10 +16,12 @@
         {% if latest_question_list %}
         <ul>
             {% for question in latest_question_list %}
+            {% if question.was_published_recently or request.user.is_staff %}
             <li>
                 <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
                 <p>{{ question.short_description }}</p>
             </li>
+            {% endif %}
             {% endfor %}
         </ul>
         {% else %}
